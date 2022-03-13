@@ -53,9 +53,9 @@
         - /mnt/media/plex/movies/:/movies
         - /mnt/media/seedbox/:/downloads
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"
 
   - name: Create radarr4k container
     docker_container:
@@ -72,9 +72,9 @@
         - /mnt/media/plex/4kmovies/:/movies
         - /mnt/media/seedbox/:/downloads   
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"
 
   - name: Create sonarr container
     docker_container:
@@ -91,9 +91,9 @@
         - /mnt/media/plex/tvshows/:/tv
         - /mnt/media/seedbox/:/downloads
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago          
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"      
 
   - name: Create plex container
     docker_container:
@@ -112,10 +112,10 @@
         - /mnt/media/plex/tvshows/:/tv
         - /mnt/transcode/:/tmp
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago
-        - VERSION=docker
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"
+        VERSION: docker
 
   - name: Create ombi container
     docker_container:
@@ -135,9 +135,9 @@
         - "traefik.http.routers.ombi.entrypoints=web-secure"
         - "traefik.http.routers.ombi.tls=true"
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago         
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"      
 
   - name: Create jackett container
     docker_container:
@@ -153,9 +153,9 @@
         - /docker/jackett/config/:/config
         - /docker/jackett/downloads/:/downloads
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago          
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"        
 
   - name: Create prowlarr container
     docker_container:
@@ -168,9 +168,9 @@
       volumes:
         - /docker/prowlarr/config/:/config
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago          
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"        
 
   - name: Create VPN container
     docker_container:
@@ -200,11 +200,11 @@
         - /mnt/media/seedbox/:/downloads
       network_mode: service:vpn
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago
-        - UMASK=000
-        - DELUGE_LOGLEVEL=error          
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"
+        UMASK: "000"
+        DELUGE_LOGLEVEL: "error"
 
   - name: Create organizr container
     docker_container:
@@ -217,6 +217,6 @@
       volumes:
         - /docker/organizr/config/:/config
       env:
-        - PUID=1000
-        - PGID=1000
-        - TZ=America/Chicago
+        PUID: "1000"
+        PGID: "1000"
+        TZ: "America/Chicago"
