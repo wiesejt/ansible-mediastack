@@ -118,7 +118,7 @@
 
   - name: Create ombi container
     docker_container:
-      name: plex
+      name: ombi
       image: lscr.io/linuxserver/ombi:latest
       state: started
       recreate: yes
