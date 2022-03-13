@@ -12,211 +12,211 @@
     pip_install_packages:
       - name: docker
 
-    tasks:
-      - name: Create network
-        docker_network:
-          name: media_net
+  tasks:
+  - name: Create network
+    docker_network:
+      name: media_net
 
-      - name: Create traefik network
-        docker_network:
-          name: traefik_net
+  - name: Create traefik network
+    docker_network:
+      name: traefik_net
 
-      - name: Create container directories
-        file:
-          path: "{{item.path}}"
-          state: directory
-        with_items:
-          - {path: "/docker/radarr/"}
-          - {path: "/docker/radarr-4k/"}     
-          - {path: "/docker/sonarr/"}
-          - {path: "/docker/ombi/"}
-          - {path: "/docker/jackett/"}
-          - {path: "/docker/vpn/"}
-          - {path: "/docker/organizr/"}
-          - {path: "/docker/plex/"}
-          - {path: "/docker/prowlarr/"}
-          - {path: "/docker/traefik/"}
-          - {path: "/docker/deluge/"}
+  - name: Create container directories
+    file:
+      path: "{{item.path}}"
+      state: directory
+    with_items:
+      - {path: "/docker/radarr/"}
+      - {path: "/docker/radarr-4k/"}     
+      - {path: "/docker/sonarr/"}
+      - {path: "/docker/ombi/"}
+      - {path: "/docker/jackett/"}
+      - {path: "/docker/vpn/"}
+      - {path: "/docker/organizr/"}
+      - {path: "/docker/plex/"}
+      - {path: "/docker/prowlarr/"}
+      - {path: "/docker/traefik/"}
+      - {path: "/docker/deluge/"}
 
-      - name: Create radarr container
-        docker_container:
-          name: radarr
-          image: ghcr.io/linuxserver/radarr:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "7878:7878"
-          networks:
-            - media_net
-          volumes:
-            - /docker/radarr/config/:/config
-            - /mnt/media/plex/movies/:/movies
-            - /mnt/media/seedbox/:/downloads
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago
+  - name: Create radarr container
+    docker_container:
+      name: radarr
+      image: ghcr.io/linuxserver/radarr:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "7878:7878"
+      networks:
+        - media_net
+      volumes:
+        - /docker/radarr/config/:/config
+        - /mnt/media/plex/movies/:/movies
+        - /mnt/media/seedbox/:/downloads
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago
 
-      - name: Create radarr4k container
-        docker_container:
-          name: radarr4k
-          image: ghcr.io/linuxserver/radarr:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "7879:7878"
-          networks:
-            - media_net            
-          volumes:
-            - /docker/radarr-4k/config/:/config
-            - /mnt/media/plex/4kmovies/:/movies
-            - /mnt/media/seedbox/:/downloads   
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago
+  - name: Create radarr4k container
+    docker_container:
+      name: radarr4k
+      image: ghcr.io/linuxserver/radarr:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "7879:7878"
+      networks:
+        - media_net            
+      volumes:
+        - /docker/radarr-4k/config/:/config
+        - /mnt/media/plex/4kmovies/:/movies
+        - /mnt/media/seedbox/:/downloads   
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago
 
-      - name: Create sonarr container
-        docker_container:
-          name: sonarr
-          image: ghcr.io/linuxserver/sonarr:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "8989:8989"
-          networks:
-            - media_net            
-          volumes:
-            - /docker/sonarr/config/:/config
-            - /mnt/media/plex/tvshows/:/tv
-            - /mnt/media/seedbox/:/downloads
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago          
+  - name: Create sonarr container
+    docker_container:
+      name: sonarr
+      image: ghcr.io/linuxserver/sonarr:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "8989:8989"
+      networks:
+        - media_net            
+      volumes:
+        - /docker/sonarr/config/:/config
+        - /mnt/media/plex/tvshows/:/tv
+        - /mnt/media/seedbox/:/downloads
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago          
 
-      - name: Create plex container
-        docker_container:
-          name: plex
-          image: ghcr.io/linuxserver/plex:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "32400:32400"
-          networks:
-            - media_net            
-          volumes:
-            - /docker/plex/config/:/config
-            - /mnt/media/plex/movies/:/movies
-            - /mnt/media/plex/4kmovies/:/4kmovies
-            - /mnt/media/plex/tvshows/:/tv
-            - /mnt/transcode/:/tmp
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago
-            - VERSION=docker
+  - name: Create plex container
+    docker_container:
+      name: plex
+      image: ghcr.io/linuxserver/plex:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "32400:32400"
+      networks:
+        - media_net            
+      volumes:
+        - /docker/plex/config/:/config
+        - /mnt/media/plex/movies/:/movies
+        - /mnt/media/plex/4kmovies/:/4kmovies
+        - /mnt/media/plex/tvshows/:/tv
+        - /mnt/transcode/:/tmp
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago
+        - VERSION=docker
+        
+  - name: Create ombi container
+    docker_container:
+      name: plex
+      image: ghcr.io/linuxserver/ombi:latest
+      state: started
+      recreate: yes
+      networks:
+        - media_net
+        - traefik_net
+      volumes:
+        - /docker/ombi/config/:/config
+      labels: 
+        - "traefik.enable=true"
+        - "traefik.http.routers.ombi.rule=Host(`ombi.wiesefamily.io`)"
+        - "traefik.docker.network=traefik_net"
+        - "traefik.http.routers.ombi.entrypoints=web-secure"
+        - "traefik.http.routers.ombi.tls=true"
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago         
 
-      - name: Create ombi container
-        docker_container:
-          name: plex
-          image: ghcr.io/linuxserver/ombi:latest
-          state: started
-          recreate: yes
-          networks:
-            - media_net
-            - traefik_net
-          volumes:
-            - /docker/ombi/config/:/config
-          labels: 
-            - "traefik.enable=true"
-            - "traefik.http.routers.ombi.rule=Host(`ombi.wiesefamily.io`)"
-            - "traefik.docker.network=traefik_net"
-            - "traefik.http.routers.ombi.entrypoints=web-secure"
-            - "traefik.http.routers.ombi.tls=true"
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago         
+  - name: Create jackett container
+    docker_container:
+      name: jackett
+      image: ghcr.io/linuxserver/jackett:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "9117:9117"
+      networks:
+        - media_net            
+      volumes:
+        - /docker/jackett/config/:/config
+        - /docker/jackett/downloads/:/downloads
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago          
 
-      - name: Create jackett container
-        docker_container:
-          name: jackett
-          image: ghcr.io/linuxserver/jackett:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "9117:9117"
-          networks:
-            - media_net            
-          volumes:
-            - /docker/jackett/config/:/config
-            - /docker/jackett/downloads/:/downloads
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago          
+  - name: Create prowlarr container
+    docker_container:
+      name: prowlarr
+      image: ghcr.io/linuxserver/prowlarr:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "9696:9696"
+      volumes:
+        - /docker/prowlarr/config/:/config
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago          
 
-      - name: Create prowlarr container
-        docker_container:
-          name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "9696:9696"
-          volumes:
-            - /docker/prowlarr/config/:/config
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago          
+  - name: Create VPN container
+    docker_container:
+      name: vpn
+      image: ghcr.io/linuxserver/vpn:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "8112:8112"
+      networks:
+        - media_net            
+      volumes:
+        - /dev/net:/dev/net:z # tun device
+        - /docker/vpn/config/:/vpn # OpenVPN configuration
+      security_opt:
+        - label:disable
+      command: '-f "" -r 192.168.1.0/24'
 
-      - name: Create VPN container
-        docker_container:
-          name: vpn
-          image: ghcr.io/linuxserver/vpn:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "8112:8112"
-          networks:
-            - media_net            
-          volumes:
-            - /dev/net:/dev/net:z # tun device
-            - /docker/vpn/config/:/vpn # OpenVPN configuration
-          security_opt:
-            - label:disable
-          command: '-f "" -r 192.168.1.0/24'
+  - name: Create deluge container
+    docker_container:
+      name: deluge
+      image: ghcr.io/linuxserver/deluge:latest
+      state: started
+      recreate: yes
+      volumes:
+        - /docker/deluge/config:/config
+        - /mnt/media/seedbox/:/downloads
+      network_mode: service:vpn
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago
+        - UMASK=000
+        - DELUGE_LOGLEVEL=error          
 
-      - name: Create deluge container
-        docker_container:
-          name: deluge
-          image: ghcr.io/linuxserver/deluge:latest
-          state: started
-          recreate: yes
-          volumes:
-            - /docker/deluge/config:/config
-            - /mnt/media/seedbox/:/downloads
-          network_mode: service:vpn
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago
-            - UMASK=000
-            - DELUGE_LOGLEVEL=error          
-
-      - name: Create organizr container
-        docker_container:
-          name: organizr
-          image: ghcr.io/linuxserver/organizr:latest
-          state: started
-          recreate: yes
-          exposed_ports:
-            - "8082:80"
-          volumes:
-            - /docker/organizr/config/:/config
-          env:
-            - PUID=1000
-            - PGID=1000
-            - TZ=America/Chicago
+  - name: Create organizr container
+    docker_container:
+      name: organizr
+      image: ghcr.io/linuxserver/organizr:latest
+      state: started
+      recreate: yes
+      exposed_ports:
+        - "8082:80"
+      volumes:
+        - /docker/organizr/config/:/config
+      env:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/Chicago
