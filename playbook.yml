@@ -41,7 +41,7 @@
   - name: Create radarr container
     docker_container:
       name: radarr
-      image: ghcr.io/linuxserver/radarr:latest
+      image: lscr.io/linuxserver/radarr:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -60,7 +60,7 @@
   - name: Create radarr4k container
     docker_container:
       name: radarr4k
-      image: ghcr.io/linuxserver/radarr:latest
+      image: lscr.io/linuxserver/radarr:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -79,7 +79,7 @@
   - name: Create sonarr container
     docker_container:
       name: sonarr
-      image: ghcr.io/linuxserver/sonarr:latest
+      image: lscr.io/linuxserver/sonarr:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -98,7 +98,7 @@
   - name: Create plex container
     docker_container:
       name: plex
-      image: ghcr.io/linuxserver/plex:latest
+      image: lscr.io/linuxserver/plex:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -120,7 +120,7 @@
   - name: Create ombi container
     docker_container:
       name: plex
-      image: ghcr.io/linuxserver/ombi:latest
+      image: lscr.io/linuxserver/ombi:latest
       state: started
       recreate: yes
       networks:
@@ -142,7 +142,7 @@
   - name: Create jackett container
     docker_container:
       name: jackett
-      image: ghcr.io/linuxserver/jackett:latest
+      image: lscr.io/linuxserver/jackett:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -160,7 +160,7 @@
   - name: Create prowlarr container
     docker_container:
       name: prowlarr
-      image: ghcr.io/linuxserver/prowlarr:latest
+      image: lscr.io/linuxserver/prowlarr:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -175,7 +175,7 @@
   - name: Create VPN container
     docker_container:
       name: vpn
-      image: ghcr.io/linuxserver/vpn:latest
+      image: lscr.io/linuxserver/vpn:latest
       state: started
       recreate: yes
       exposed_ports:
@@ -192,7 +192,7 @@
   - name: Create deluge container
     docker_container:
       name: deluge
-      image: ghcr.io/linuxserver/deluge:latest
+      image: lscr.io/linuxserver/deluge:latest
       state: started
       recreate: yes
       volumes:
@@ -209,7 +209,7 @@
   - name: Create organizr container
     docker_container:
       name: organizr
-      image: ghcr.io/linuxserver/organizr:latest
+      image: lscr.io/linuxserver/organizr:latest
       state: started
       recreate: yes
       exposed_ports:
