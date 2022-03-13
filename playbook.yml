@@ -35,7 +35,6 @@
       - {path: "/docker/organizr/"}
       - {path: "/docker/plex/"}
       - {path: "/docker/prowlarr/"}
-      - {path: "/docker/traefik/"}
       - {path: "/docker/deluge/"}
 
   - name: Create radarr container
