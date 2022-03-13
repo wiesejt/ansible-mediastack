@@ -187,7 +187,7 @@
             - /docker/vpn/config/:/vpn # OpenVPN configuration
           security_opt:
             - label:disable
-          command: '-f ""' -r 192.168.1.0/24
+          command: '-f "" -r 192.168.1.0/24'
 
       - name: Create deluge container
         docker_container:
