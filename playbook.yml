@@ -27,7 +27,7 @@
       state: directory
     with_items:
       - {path: "/docker/radarr/"}
-      - {path: "/docker/radarr-4k/"}     
+      - {path: "/docker/radarr-4k/"}
       - {path: "/docker/sonarr/"}
       - {path: "/docker/ombi/"}
       - {path: "/docker/jackett/"}
@@ -66,11 +66,11 @@
       ports:
         - "7879:7878"
       networks:
-        - name: media_net          
+        - name: media_net
       volumes:
         - /docker/radarr-4k/config/:/config
         - /mnt/media/plex/4kmovies/:/movies
-        - /mnt/media/seedbox/:/downloads   
+        - /mnt/media/seedbox/:/downloads
       env:
         PUID: "1000"
         PGID: "1000"
@@ -85,7 +85,7 @@
       ports:
         - "8989:8989"
       networks:
-        - name: media_net           
+        - name: media_net
       volumes:
         - /docker/sonarr/config/:/config
         - /mnt/media/plex/tvshows/:/tv
@@ -93,7 +93,7 @@
       env:
         PUID: "1000"
         PGID: "1000"
-        TZ: "America/Chicago"      
+        TZ: "America/Chicago"
 
   - name: Create plex container
     docker_container:
@@ -104,7 +104,7 @@
       ports:
         - "32400:32400"
       networks:
-        - name: media_net           
+        - name: media_net
       volumes:
         - /docker/plex/config/:/config
         - /mnt/media/plex/movies/:/movies
@@ -128,16 +128,16 @@
         - name: traefik_net
       volumes:
         - /docker/ombi/config/:/config
-      labels: 
-        - "traefik.enable=true"
-        - "traefik.http.routers.ombi.rule=Host(`ombi.wiesefamily.io`)"
-        - "traefik.docker.network=traefik_net"
-        - "traefik.http.routers.ombi.entrypoints=web-secure"
-        - "traefik.http.routers.ombi.tls=true"
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.ombi.rule: "Host(`ombi.wiesefamily.io`)"
+        traefik.docker.network: "traefik_net"
+        traefik.http.routers.ombi.entrypoints: "web-secure"
+        traefik.http.routers.ombi.tls: "true"
       env:
         PUID: "1000"
         PGID: "1000"
-        TZ: "America/Chicago"      
+        TZ: "America/Chicago"
 
   - name: Create jackett container
     docker_container:
@@ -148,19 +148,19 @@
       ports:
         - "9117:9117"
       networks:
-        - name: media_net          
+        - name: media_net
       volumes:
         - /docker/jackett/config/:/config
         - /docker/jackett/downloads/:/downloads
       env:
         PUID: "1000"
         PGID: "1000"
-        TZ: "America/Chicago"        
+        TZ: "America/Chicago"
 
   - name: Create prowlarr container
     docker_container:
       name: prowlarr
-      image: lscr.io/linuxserver/prowlarr:latest
+      image: lscr.io/linuxserver/prowlarr:develop
       state: started
       recreate: yes
       ports:
@@ -170,23 +170,23 @@
       env:
         PUID: "1000"
         PGID: "1000"
-        TZ: "America/Chicago"        
+        TZ: "America/Chicago"
 
   - name: Create VPN container
     docker_container:
       name: vpn
-      image: lscr.io/linuxserver/vpn:latest
+      image: dperson/openvpn-client:latest
       state: started
       recreate: yes
       ports:
         - "8112:8112"
       networks:
-        - name: media_net           
+        - name: media_net
       volumes:
         - /dev/net:/dev/net:z # tun device
         - /docker/vpn/config/:/vpn # OpenVPN configuration
-      security_opt:
-        - label:disable
+      security_opts:
+        - "label:disable"
       command: '-f "" -r 192.168.1.0/24'
 
   - name: Create deluge container
@@ -198,7 +198,7 @@
       volumes:
         - /docker/deluge/config:/config
         - /mnt/media/seedbox/:/downloads
-      network_mode: service:vpn
+      network_mode: container:vpn
       env:
         PUID: "1000"
         PGID: "1000"
@@ -209,7 +209,7 @@
   - name: Create organizr container
     docker_container:
       name: organizr
-      image: lscr.io/linuxserver/organizr:latest
+      image: organizr/organizr
       state: started
       recreate: yes
       ports:
